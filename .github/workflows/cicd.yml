@@ -1,0 +1,35 @@
+name: CICD
+
+on:
+  push:
+    branches: [deploy-to-ec2]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build Project
+        run: mvn clean install -DskipTests
+      - name: Login to docker hub
+        run: docker login -u ${{secrets.USERNAME}} -p ${{secrets.PASSWORD}}
+      - name: Build docker image
+        run: docker build -t deepa3500/contact-information .
+      - name: Publish image to docker hub
+        run: docker push deepa3500/contact-information:latest
+  deploy:
+    needs: build
+    runs-on: [aws-ec2]
+    steps:
+      - name: Pull Image from docker hub
+        run: docker pull deepa3500/contact-information:latest
+      - name: Delete old container
+        run: docker rm -f contact-container
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name contact-container deepa3500/contact-information
