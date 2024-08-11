@@ -25,7 +25,7 @@ jobs:
         run: docker push deepa3500/contact-information:latest
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: [aws-contact]
     steps:
       - name: Pull Image from docker hub
         run: docker pull deepa3500/contact-information:latest
