@@ -20,16 +20,16 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.USERNAME}} -p ${{secrets.PASSWORD}}
       - name: Build docker image
-        run: docker build -t deepa3500/contact-information .
+        run: docker build -t deepa9220/contact-information .
       - name: Publish image to docker hub
-        run: docker push deepa3500/contact-information:latest
+        run: docker push deepa9220/contact-information:latest
   deploy:
     needs: build
     runs-on: [aws-contact]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull deepa3500/contact-information:latest
+        run: docker pull deepa9220/contact-information:latest
       - name: Delete old container
         run: docker rm -f contact-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name contact-container deepa3500/contact-information
+        run: docker run -d -p 8080:8080 --name contact-container deepa9220/contact-information
