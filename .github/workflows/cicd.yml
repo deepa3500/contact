@@ -20,7 +20,7 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.USERNAME}} -p ${{secrets.PASSWORD}}
       - name: Build docker image
-        run: docker build -t deepa9220/contact-information .
+        run: docker build . -f Dockerfile.txt -t deepa9220/contact-information .
       - name: Publish image to docker hub
         run: docker push deepa9220/contact-information:latest
   deploy:
