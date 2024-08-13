@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    branches: [master]
+    branches: [master-AWS EC2]
 
 jobs:
   build:
@@ -32,6 +32,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: Set Docker socket permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Pull Image from docker hub
         run: docker image pull deepa9220/contact-information:latest
       - name: Delete old container
