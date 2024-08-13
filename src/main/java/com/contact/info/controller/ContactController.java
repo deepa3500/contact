@@ -14,7 +14,7 @@ public class ContactController {
 		Map<String,String> cont = new HashMap<>();
 		cont.put("name", "Deepa Datta");
 		cont.put("email", "deepa9220@gmail.com");
-		System.out.println("Working as expected!!!");
+		System.out.println("Working as expected!!!Hurry!!!");
 		return cont;
 	}
 
